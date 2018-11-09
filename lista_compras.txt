@@ -1,0 +1,4 @@
+chocolate; 10
+pipoca; 20
+agua; 30
+arroz; 100

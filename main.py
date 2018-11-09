@@ -1,5 +1,4 @@
 #Importando as bibliotecas:
-from janela_principal import Janela_Principal
+from controle import Controle
 
-jnl = Janela_Principal()
-jnl.mainloop()
+Controle()

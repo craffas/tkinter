@@ -9,9 +9,12 @@ class Segunda_Janela(Toplevel):
         #Chamar o init da classe mãe:
         super().__init__(parent)
         # Ajustar tamanho
-        self.geometry('400x150+450+200')
+        self.geometry('380x440+50+100')
+        #Definindo cor de fundo da tela:
+        corFundo = ('pink')
+        self.configure(background=corFundo)
         # Colocando um título na Janela
-        self.title('Segunda Janela')
+        self.title('Exibir Itens')
         self.transient(parent)
         self.grab_set()
 

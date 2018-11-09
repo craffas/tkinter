@@ -6,44 +6,51 @@ from segunda_janela import Segunda_Janela
 #Classe janela_principal
 class Janela_Principal(Tk):
     #Método Construtor
-    def __init__(self):
+    def __init__(self, controle):
+        #Atributos:
+        self.controle = controle
         #Executar o método da classe mãe:
         super().__init__()
         #Ajustar tamanho
-        self.geometry('600x200+450+200')
+        self.geometry('380x440+50+100')
+        #Definindo cor de fundo da tela:
+        corFundo = ('pink')
+        self.configure(background=corFundo)
         #Colocando um título na Janela
         self.title('Lista de Compras')
 
         #Widgets na tela:
         self.btn_close = Button(self, width=10, text='Sair', command=self.destroy)
         self.btn_ok = Button(self, width=10, text='Ok', command=self.btn_ok_click)
-        self.lbl_ok = Label(self, text='Pesquisar item:')
+        self.lbl_ok = Label(self, text='USUÁRIO', background=corFundo, font='Arial')
         self.txt_ok = Entry(self)
+        self.lbl_senha_ok = Label(self, text='SENHA', background=corFundo, font='Arial')
+        self.txt_senha_ok = Entry(self, show='*')
 
         #Criando exibição de itens na tela:
         self.exb = Label(self, text='')
         self.exb_msg = Label(self, text='Itens na lista:')
         #Posicionando os widgets:
-        self.btn_close.place(x=10, y=170)
-        self.btn_ok.place(x=510, y=170)
-        self.lbl_ok.place(x=10, y=10)
-        self.txt_ok.place(x=10, y=40)
+        self.btn_close.place(x=140, y=300)
+        self.btn_ok.place(x=140, y=260)
+        self.lbl_ok.place(x=145, y=90)
+        self.txt_ok.place(x=120, y=120)
 
+        self.lbl_senha_ok.place(x=145, y=160)
+        self.txt_senha_ok.place(x=120, y=190)
         # == Menu ==
         #Criando um menu:
         self.menu = Menu(self)
         #Criando item e subitens de menu:
         self.menu_principal = Menu(self.menu, tearoff=0)
-        self.menu_principal.add_command(label='Exibir Item',command=self.exibir_na_tela)
+        self.menu_principal.add_command(label='Exibir Item',command=self.criar_segunda_janela)
         self.menu_principal.add_command(label='Adicionar Item', command=self.menu_click)
         self.menu_principal.add_command(label='Excluir Item', command=self.menu_click)
         self.menu_principal.add_separator()
         self.menu_principal.add_command(label='Sair', command=self.destroy)
 
-        self.menu.add_cascade(label='Principal', menu=self.menu_principal)
-
         #Mostrando o menu:
-        self.config(menu=self.menu)
+        self.config(menu=self.menu_principal)
 
     #Método para ativar o Button 'Sair':
     def destroy(self):
@@ -53,8 +60,11 @@ class Janela_Principal(Tk):
 
     #Método para btn_ok
     def btn_ok_click(self):
-        #Mudar o texto do lbl_ok
-        self.lbl_ok['text'] = self.txt_ok.get()
+        #Recuperar a lista de compra:
+        lista_compra = self.controle.get_lista_compra()
+        #Percorrer a lista:
+        for item in lista_compra:
+            messagebox.showinfo('Item', item.to_string())
 
     #Método para clicar no item de menu:
     def menu_click(self):
@@ -69,9 +79,4 @@ class Janela_Principal(Tk):
         #Redimensionando na tela:
         self.exb_msg.place(x=10, y=60)
         self.exb.place(x=10, y=80)
-    def exibir_lista(self):
-        # Abrindo o arquivo txt:
-        list = open('lista_compras', 'r')
-        for chave, valor in list.items():
-            return (f'-{chave} : {valor}')
 
